@@ -1,6 +1,7 @@
 =begin
 
 PROBLEM
+Description:
 Write a program that manages robot factory settings.
 
 When robots come off the factory floor, they have no name. 
@@ -14,35 +15,42 @@ The names must be random; they should not follow a predictable sequence.
 Random names means there is a risk of collisions. 
 Your solution should not allow the use of the same name twice.
 
-Input
-Output
+Input:  x
+Output: x
 Rules
+  Robot
+    created without name
+    name created at bootup
+    name is 
+      randmom 
+      matches to /^[A-Z]{2}\d{3}$/
+        e.g. RX837 or BC811
+      name cannot be used twice; never repeats accross instances
+    can resest
+      name is wiped
+      next time name is asked, respond with new name
 
 
 EXAMPLES / TEST CASES
 Class: Robot
   Attributes;
-    @@names -holds names in huse
-
+    @@names - holds names in use
     @name
-      matches to /^[A-Z]{2}\d{3}$/
-      value is randomly assignment
-      value never repeats accross instances
-  #initialize
-    () - assigns name
-  #name (getter, public)
-  #reset - reassigns @name
+  Behaviors  
+    #name 
+      if @name is not assigned, genenerate name
+      return @name
+    #reset - clears @name
 
 DATA STRUCTURES
 
 
-ALGO
-
+ALGORITHM
 
 Class: Robot
   Attributes;
-    @@names - holds names in use
-    @name
+    @@names - all robot names in use
+    @name - robot name
 
   #name (getter, and will assign name if absent)
     if name is not assigned, 
