@@ -1,76 +1,114 @@
 # rubocop:disable all
 =begin
-PEDA: 20 minutes; C: 19 minutes
-
 PROBLEM
-Description
-
-Write a program that takes a word and a list of possible anagrams and 
+Takes
+  a word and 
+  a list of possible anagrams 
 selects the correct sublist that contains the anagrams of the word.
 
-Input: 
-  String: word
-  Array of Strings; candidates
-Output:
-  Array of Strings: subset of strings that are anagrams
+For example, given the word "listen" and a list of candidates like "enlists", "google", "inlets", and "banana", the program should return a list containing "inlets". Please read the test suite for the exact rules of anagrams.
 
-Rules
-  candidate is anagram if
-    candidate is not same as word
-    it can be spelled with using all letters of word once - case insensitive
-    and count of captial letters match (can be differerent letters)    
-  return [] if no anagrams
+
 
 EXAMPLES / TEST CASES
 
-given the word "listen" and 
-candidates: "enlists", "google", "inlets", and "banana", 
-the program should return a list containing "inlets". 
+Anagram.new('ant')
+detector.match(%w(tan stand at)) 
+# => tan
+
+
+word: "listen" 
+list: "enlists", "google", "inlets", and "banana", 
+# =>  "inlets"
+
+
+Orchestra
+cashregister Carthorse radishes
+Carthorse
+#case insensitive
+
+corn
+corn dark Corn rank CORN cron park
+cron
 
 DATA STRUCTURES
-class: Anagram
-methods;
-  #initialize: takes String
-    assign @upcase: count of upper case Chars in argument
-    assign @sorted_downcase: to lowercase, sorted letters of argument
+String
+Array (of String Elements)
+Array
 
-  #match: takes an array of Strings
-    returns array of Strings that are anagrams
+class Anagram
+  #new(word) -> new_anagram_obj
+    word is String 
+    stores string
+    no validation required
+
+  #match(candidates) -> anagrams
+    candidates is Array
+      elements are Strings that are anagrams of word
+    no validation required
 
 ALGORITHM
+  #new(word) -> new_anagram_obj
+    word is String 
+    stores string
+    no validation required
 
-#match(candiates)
-Given Array of Strings; candidates 
+    Input: String
+    Output: Anagram
+    Rules:
+      save word to instance variabe
+    
+  #match(candidates)
+    candidates is Array
+      elements are Strings that are anagrams of word
+    no validation required
 
-iterate through each candidate
-  reject if candidate == word
-  regject if candidate length is not equal to word length
+    Input: Array
+    Output: Array
+    Rules:
+      output is Array, of Strings that are anagrams
+        return empty array if no anagrams
+      anagram
+        letters of candidate can be used to spell 'word'
+          same total letter count
+          same count of every letter
+          case insensitive
+        if candidate == word, it is not an anagram
+  
+    approach:
+    init word_sorted_downcase
+    init output: []
+    iterate through each candidate
+      skip if candidate lower case == @ workd lowercase
+      reassign candidate: sorted and downcase (transform)
+      if candidate is eqals word, push to output array (select)
+    output
 
-  init upper_case to count of upper case letters
-  init sorted_downcase_candidate: downcase and sort letters in string
-  add to candiate to output if
-    @letters == sorted_downcase_candidate
-    and
-    @upcase_count == 
+  #sort_dowcase(string)
+    sort.downcase
+
 =end
-# rubocop:disable all
+# rubocop:enable all
+
 class Anagram
   def initialize(word)
-    @word = word.downcase
+    @word = word
   end
 
   def match(candidates)
-    word_downcase_sorted = downcase_sort(@word)
-    candidates.each_with_object([]) do | candidate, anagrams|
-      next if @word == candidate.downcase || @word.length != candidate.length
-      downcase_sorted_matched = word_downcase_sorted == downcase_sort(candidate)
-      anagrams << candidate if downcase_sorted_matched
+    word_sorted_downcase = sort_downcase(@word)
+    candidates.select do |candidate|
+      next if @word.downcase == candidate.downcase
+      word_sorted_downcase == sort_downcase(candidate)
     end
   end
 
   private
-  
-  def downcase_sort(str)
+
+  def sort_downcase(str)
     str.downcase.chars.sort.join
   end
+
+  def anagram?(word1, word2)  
+    
 end
